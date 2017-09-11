@@ -8,6 +8,7 @@ const process = require('./process');
 const MathJaxNode = React.createClass({
     propTypes: {
         inline:   React.PropTypes.bool,
+        type:     React.PropTypes.oneOf(['mml', 'asciimath', 'tex']),
         children: React.PropTypes.node.isRequired,
         onRender: React.PropTypes.func
     },
@@ -114,11 +115,11 @@ const MathJaxNode = React.createClass({
      * @return {DOMNode} script
      */
     setScriptText(text) {
-        const { inline } = this.props;
+        const { inline, type } = this.props;
 
         if (!this.script) {
             this.script = document.createElement('script');
-            this.script.type = 'math/tex; ' + (inline ? '' : 'mode=display');
+            this.script.type = 'math/' + (type ? type : 'tex') + '; ' + (inline ? '' : 'mode=display');
             this.refs.node.appendChild(this.script);
         }
 
